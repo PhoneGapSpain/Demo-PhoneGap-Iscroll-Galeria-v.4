@@ -1,0 +1,80 @@
+var myScroll;
+
+function loaded() {
+	myScroll = new iScroll('wrapper', {
+		snap: true,
+		momentum: false,
+		hScrollbar: false,
+		onScrollEnd: function () {
+		}
+ 	});	
+}
+
+window.onload = function() {
+	
+	//guardamos en variables el tamaño de la ventana del navegador para no tener que volver a acceder posteriormente
+	var altoPantalla=window.innerHeight;
+	var anchoPantalla=window.innerWidth;
+	
+	//le restamos al alto de la pantalla tanto el alto del pie como de la cabecera
+	altoPantalla=altoPantalla-45;
+	altoPantalla=altoPantalla-48;
+	
+	//Guardamos en variables los elementos del dom.
+	var ul=document.getElementById('thelist');
+	var scroller=document.getElementById('scroller');
+	var wrapper=document.getElementById('wrapper');
+	
+	var node = ul.children;// elementos li de la lista.
+	
+	//le damos a todos los elementos el alto del que va a disponer nuestra galería.
+	ul.style.height=altoPantalla+'px';
+	scroller.style.height=altoPantalla+'px';
+	wrapper.style.height=altoPantalla+'px';
+	
+	wrapper.style.width=anchoPantalla+'px';//el ancho de nuestra "ventana" será todo el ancho de la pantalla.
+	
+	var anchoscroller=anchoPantalla*node.length;//el ancho del será el ancho de la pantalla tantas veces como fotos haya en la lista.
+	scroller.style.width=anchoscroller+'px';
+	
+		for (i = 0; i < node.length; i++) {//Recorremos los elementos de la lista
+		
+			var li = node[i];
+			
+			//Guardamos en variables los tamaños reales de las fotografías a las que hacemos referencia en el código html
+			var altoFotoReal=li.childNodes[0].height;
+			var anchoFotoReal=li.childNodes[0].width;
+			
+			//Estas variables las usaremos para guardar el tamaño en el que las vamos a ver nosotros
+			var altoFotoActual;
+			var anchoFotoActual;
+			
+			//como primera opción tomamos que ocupe todo el ancho y se autoajuste el alto
+			anchoFotoActual=anchoPantalla+'px';
+			altoFotoActual='auto';
+			
+			//Calculamos el ratio del cambio que hemos realizado.
+			var ratio=anchoPantalla/anchoFotoReal; 
+			
+			// si la foto se nos sale de alto con los valores que le hemos dado, ajustamos el alto y le ponemos el ancho como auto
+			if(altoFotoReal*ratio>altoPantalla){ 
+				anchoFotoActual='auto';
+				altoFotoActual=altoPantalla+'px';
+				li.style.width=anchoPantalla+'px';
+			}
+			
+			//aplicamos los valores calculados a cada elemento
+			li.style.height=altoPantalla+'px';
+			li.style.lineHeight=altoPantalla+'px';
+			li.childNodes[0].style.width=anchoFotoActual
+			li.childNodes[0].style.height=altoFotoActual
+		}
+		
+		//refrescamos el iscroll
+		wrapper.style.display='block';
+		var capacargando=document.getElementById('capacargando');
+		capacargando.style.display='none';
+		myScroll.refresh();
+}
+
+document.addEventListener('DOMContentLoaded', loaded, false);
