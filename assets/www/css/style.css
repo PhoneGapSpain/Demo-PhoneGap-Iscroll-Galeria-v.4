@@ -13,10 +13,12 @@ body {
 #wrapper {
 	width:100%;
 	float:left;
-	position:relative;	/* On older OS versions "position" and "z-index" must be defined, */
+	position:absolute;	/* On older OS versions "position" and "z-index" must be defined, */
 	z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
 	overflow:hidden;
-	display:none 
+	display:none;
+	top:45px;
+	bottom:48px
 }
 
 #scroller {
@@ -33,13 +35,7 @@ body {
 #scroller li {
 	display:block; 
 	float:left;
-	text-align:center;	
-}
-
-#scroller li img{
-	vertical-align:middle;
-	line-height:0px;
-	
+	text-align:center;
 }
 
 #cabecera{
@@ -74,8 +70,8 @@ body {
 }
 
 #loading  {
-	background:url(images/pull-icon@2x.png)  -16px -96px no-repeat;
-	display:block; float:left;
+	background:url(../images/cargando.png)  -16px -96px no-repeat;
+	display:block;
 	width:48px; height:48px;
 	-webkit-transform:rotate(0deg) translateZ(0);
 	-webkit-transition-duration:0ms;
@@ -90,28 +86,20 @@ body {
 	to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
 
-#capacargando{
+#contenedorcargando{
 	position:absolute;
-	/* Firefox */
-	top: -moz-calc(50% - 29px);
-	/* WebKit */
-	top: -webkit-calc(50% - 29px);
-	/* Opera */
-	top: -o-calc(50% - 29px);
-	/* Standard */
-	top: calc(50% - 29px);
-	
-	/* Firefox */
-	left: -moz-calc(50% - 29px);
-	/* WebKit */
-	left: -webkit-calc(50% - 29px);
-	/* Opera */
-	left: -o-calc(50% - 29px);
-	/* Standard */
-	left: calc(50% - 29px);
-	
+	width:100%;
+	top:45px;
+	bottom:48px;
+}
+
+#capacargando{
+	margin-top:50px;
+	margin-left:auto;
+	margin-right:auto;
 	padding:5px;
-	display:block; float:left;
+	display:block;
+	width:48px; height:48px;
 	background-color:#e2e2e2;
 	border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
